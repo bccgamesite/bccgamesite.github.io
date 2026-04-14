@@ -218,6 +218,235 @@
       color: #c62828;
       border-color: #ef9a9a;
     }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background-color: #fafafa;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 28px;
+      font-weight: bold;
+      color: #999;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-button:hover {
+      color: #333;
+    }
+
+    .frames-table-container {
+      overflow-x: auto;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+    }
+
+    .temp-event-editor {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+
+    .temp-event-editor table {
+      margin: 0;
+    }
+
+    .temp-event-editor td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+      font-size: 12px;
+    }
+
+    .temp-event-editor td:first-child {
+      font-weight: 600;
+      min-width: 50px;
+    }
+
+    .temp-event-editor td:last-child {
+      border-right: none;
+    }
+
+    .temp-event-editor tbody tr:hover {
+      background: #f5f5f5;
+    }
+
+    .temp-event-editor input[type="number"],
+    .temp-event-editor input[type="checkbox"],
+    .temp-event-editor select {
+      padding: 4px;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      width: 100%;
+      font-family: 'Courier New', monospace;
+    }
+
+    .temp-event-editor input[type="checkbox"] {
+      width: auto;
+      cursor: pointer;
+    }
+
+    .temp-event-editor input[type="number"]:focus,
+    .temp-event-editor select:focus {
+      outline: none;
+      border-color: #333;
+      background-color: #fff;
+    }
+
+    .temp-event-editor button {
+      padding: 4px 8px;
+      font-size: 12px;
+      width: 100%;
+    }
+
+    .frames-table-scroll {
+      flex: 1;
+      min-height: 300px;
+      overflow-y: auto;
+      overflow-x: auto;
+      border: 1px solid #ddd;
+    }
+
+    .frames-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      table-layout: fixed;
+    }
+
+    .frames-table thead {
+      background: #f9f9f9;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .frames-table th {
+      text-align: left;
+      padding: 8px 10px;
+      color: #666;
+      font-size: 12px;
+      font-weight: 600;
+      border-right: 1px solid #eee;
+    }
+
+    .frames-table th:last-child {
+      border-right: none;
+    }
+
+    .frames-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+      font-size: 12px;
+    }
+
+    .frames-table td:last-child {
+      border-right: none;
+    }
+
+    .frames-table tbody tr:hover {
+      background: #f5f5f5;
+    }
+
+    .frames-table input[type="number"],
+    .frames-table select {
+      padding: 4px;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      width: 100%;
+      font-family: 'Courier New', monospace;
+    }
+
+    .frames-table input[type="checkbox"] {
+      padding: 4px;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      width: auto;
+      cursor: pointer;
+    }
+
+    .frames-table select {
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .btn-primary {
+      background: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    .btn-primary:hover {
+      background: #555;
+      border-color: #555;
+    }
+
+    .frame-actions-cell {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .frame-actions-cell button {
+      padding: 3px 8px;
+      font-size: 11px;
+      margin: 0 2px;
+    }
   </style>
 </head>
 <body>
@@ -256,9 +485,245 @@
     </div>
   </div>
 
+  <div id="recordingModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Recording Editor</h2>
+        <button class="close-button" onclick="saveRecording()">&times;</button>
+      </div>
+      <div id="tempEventEditor" class="temp-event-editor">
+        <table class="frames-table">
+          <tbody>
+            <tr>
+              <td>New</td>
+              <td><input type="number" id="tempTime" placeholder="ms" onchange="updateTempEventTime(this.value)"></td>
+              <td>
+                <select id="tempInput" onchange="updateTempEventInput(this.value)">
+                  <option value="">-- Select --</option>
+                  <option value="up">up</option>
+                  <option value="down">down</option>
+                  <option value="left">left</option>
+                  <option value="right">right</option>
+                </select>
+              </td>
+              <td><input type="checkbox" id="tempState" onchange="updateTempEventState(this.checked)"></td>
+              <td class="frame-actions-cell"><button onclick="addTempEventToList()">Add Event</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="frames-table-scroll">
+        <table class="frames-table">
+          <thead>
+            <tr>
+              <th>Event #</th>
+              <th>Time (ms)</th>
+              <th>Direction</th>
+              <th>State</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="framesTableBody">
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <button onclick="closeRecordingModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveRecording()">Save Recording</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const notificationEl = document.getElementById('notification');
-    
+    let currentRecordingKey = null;
+    let currentFrames = [];
+    let tempEvent = {
+      time: '',
+      input: '',
+      state: true,
+      isTemp: true
+    };
+
+    // ===== Recording Codec Functions (Browser-compatible versions) =====
+    function decodeRecording(recordingBase64) {
+      // normalize base64
+      const normalized = recordingBase64
+        .replace(/_/g, '/')
+        .replace(/-/g, '+');
+
+      // Convert base64 to bytes (browser equivalent of Buffer.from)
+      const binaryString = atob(normalized);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // --- extract timestamps ---
+      const times = [];
+      let i = 0;
+
+      while (i + 2 < bytes.length && bytes[i + 2] === 0) {
+        const value = bytes[i] + (bytes[i + 1] << 8);
+        times.push(value);
+        i += 3;
+      }
+
+      // --- remaining = packed inputs ---
+      const inputsRaw = bytes.slice(i);
+
+      // decode one frame from a byte
+      function decodeFrame(byte, second) {
+        if (!second) {
+          return {
+            up: !!(byte & 1),
+            right: !!(byte & 2),
+            down: !!(byte & 4),
+            left: !!(byte & 8),
+          };
+        } else {
+          return {
+            up: !!(byte & 16),
+            right: !!(byte & 32),
+            down: !!(byte & 64),
+            left: !!(byte & 128),
+          };
+        }
+      }
+
+      // --- reconstruct frames ---
+      const frames = [];
+
+      for (let frameIndex = 0; frameIndex < times.length; frameIndex++) {
+        const byteIndex = Math.floor(frameIndex / 2);
+        const byte = inputsRaw[byteIndex] ?? 0;
+
+        const second = frameIndex % 2 === 1;
+
+        const controls = decodeFrame(byte, second);
+
+        frames.push({
+          time_ms: times[frameIndex],
+          up: controls.up,
+          down: controls.down,
+          left: controls.left,
+          right: controls.right,
+        });
+      }
+
+      // Convert frames to events (detect state changes)
+      const events = [];
+      let prevState = { up: false, down: false, left: false, right: false };
+
+      for (const frame of frames) {
+        const directions = ['up', 'down', 'left', 'right'];
+        for (const dir of directions) {
+          if (frame[dir] !== prevState[dir]) {
+            events.push({
+              time: frame.time_ms,
+              input: dir,
+              state: frame[dir]
+            });
+            prevState[dir] = frame[dir];
+          }
+        }
+      }
+
+      return events;
+    }
+
+    function generateRecording(events) {
+      function emptyControls() {
+        return { up: false, down: false, left: false, right: false };
+      }
+
+      function clone(c) {
+        return { ...c };
+      }
+
+      function same(a, b) {
+        return a.up === b.up &&
+               a.down === b.down &&
+               a.left === b.left &&
+               a.right === b.right;
+      }
+
+      function apply(ctrl, input, state) {
+        if (!(input in ctrl)) {
+          throw new Error("Invalid input: " + input);
+        }
+        ctrl[input] = state;
+      }
+
+      // sort events by time
+      events.sort((a, b) => a.time - b.time);
+
+      const frames = [];
+      let controls = emptyControls();
+
+      function pushFrame(time, ctrl) {
+        frames.push({
+          time: time,
+          controls: clone(ctrl)
+        });
+      }
+
+      // initial state
+      pushFrame(0, controls);
+
+      // apply events
+      for (const e of events) {
+        const before = clone(controls);
+
+        apply(controls, e.input, e.state);
+
+        if (!same(before, controls)) {
+          pushFrame(e.time, controls);
+        }
+      }
+
+      // --- encode timestamps ---
+      const timeBytes = [];
+      for (const f of frames) {
+        const v = f.time;
+        timeBytes.push(v & 255);
+        timeBytes.push((v >> 8) & 255);
+        timeBytes.push(0);
+      }
+
+      // --- encode inputs (2 frames per byte) ---
+      function encodeFrame(c) {
+        return (
+          (c.up ? 1 : 0) |
+          (c.right ? 2 : 0) |
+          (c.down ? 4 : 0) |
+          (c.left ? 8 : 0)
+        );
+      }
+
+      const inputBytes = [];
+
+      for (let i = 0; i < frames.length; i += 2) {
+        const f1 = encodeFrame(frames[i].controls);
+        const f2 = frames[i + 1]
+          ? encodeFrame(frames[i + 1].controls)
+          : 0;
+
+        inputBytes.push(f1 | (f2 << 4));
+      }
+
+      // combine
+      const allBytes = new Uint8Array([...timeBytes, ...inputBytes]);
+
+      // Convert to base64
+      let binaryString = '';
+      for (let i = 0; i < allBytes.length; i++) {
+        binaryString += String.fromCharCode(allBytes[i]);
+      }
+      return btoa(binaryString);
+    }
+
+    // ===== UI Functions =====
     function showNotification(message, isSuccess = true) {
       notificationEl.innerHTML = `
         <div class="notification ${isSuccess ? 'notification-success' : 'notification-error'}">
@@ -267,7 +732,7 @@
       `;
       setTimeout(() => {
         notificationEl.innerHTML = '';
-      }, 3000);
+      }, 8000);
     }
     
     function clearForm() {
@@ -319,6 +784,163 @@
         showNotification('Copied');
       });
     }
+
+    // ===== Recording Editor Functions =====
+    function openRecordingEditor(key) {
+      currentRecordingKey = key;
+      let storedValue = localStorage.getItem(key);
+      
+      try {
+        let recordingBase64 = storedValue.trim();
+        
+        // If it's JSON, extract the recording field
+        try {
+          const parsed = JSON.parse(recordingBase64);
+          if (parsed.recording) {
+            recordingBase64 = parsed.recording;
+          }
+        } catch (e) {
+          // Not JSON, treat as raw base64
+        }
+        
+        currentFrames = decodeRecording(recordingBase64);
+        clearTempEvent();
+        renderFramesTable();
+        document.getElementById('recordingModal').style.display = 'block';
+      } catch (e) {
+        showNotification(`Error decoding recording: ${e.message}`, false);
+      }
+    }
+
+    function closeRecordingModal() {
+      document.getElementById('recordingModal').style.display = 'none';
+      currentRecordingKey = null;
+      currentFrames = [];
+      clearTempEvent();
+    }
+
+    function renderFramesTable() {
+      const tbody = document.getElementById('framesTableBody');
+      tbody.innerHTML = '';
+
+      currentFrames.forEach((event, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td><input type="number" value="${event.time === '' ? '' : event.time}" placeholder="ms" onchange="updateEventTime(${index}, this.value)"></td>
+          <td>
+            <select onchange="updateEventInput(${index}, this.value)">
+              <option value="up" ${event.input === 'up' ? 'selected' : ''}>up</option>
+              <option value="down" ${event.input === 'down' ? 'selected' : ''}>down</option>
+              <option value="left" ${event.input === 'left' ? 'selected' : ''}>left</option>
+              <option value="right" ${event.input === 'right' ? 'selected' : ''}>right</option>
+            </select>
+          </td>
+          <td><input type="checkbox" ${event.state ? 'checked' : ''} onchange="updateEventState(${index}, this.checked)"></td>
+          <td class="frame-actions-cell"><button class="btn-danger" onclick="removeEvent(${index})">Remove</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateEventTime(index, value) {
+      currentFrames[index].time = value === '' ? '' : parseInt(value);
+    }
+
+    function updateEventInput(index, value) {
+      currentFrames[index].input = value;
+    }
+
+    function updateEventState(index, value) {
+      currentFrames[index].state = value;
+    }
+
+    function removeEvent(index) {
+      currentFrames.splice(index, 1);
+      renderFramesTable();
+    }
+
+    function updateTempEventTime(value) {
+      tempEvent.time = value === '' ? '' : parseInt(value);
+    }
+
+    function updateTempEventInput(value) {
+      tempEvent.input = value;
+    }
+
+    function updateTempEventState(checked) {
+      tempEvent.state = checked;
+    }
+
+    function addTempEventToList() {
+      if (tempEvent.time === '' || tempEvent.time === undefined) {
+        showNotification('Please enter a time', false);
+        return;
+      }
+
+      if (tempEvent.input === '' || tempEvent.input === undefined) {
+        showNotification('Please select a direction', false);
+        return;
+      }
+
+      // Add to currentFrames
+      currentFrames.push({
+        time: tempEvent.time,
+        input: tempEvent.input,
+        state: tempEvent.state
+      });
+
+      // Sort by time
+      currentFrames.sort((a, b) => a.time - b.time);
+      renderFramesTable();
+
+      // Reset temp event
+      clearTempEvent();
+    }
+
+    function clearTempEvent() {
+      tempEvent = {
+        time: '',
+        input: '',
+        state: true
+      };
+      document.getElementById('tempTime').value = '';
+      document.getElementById('tempInput').value = '';
+      document.getElementById('tempState').checked = true;
+    }
+
+    function saveRecording() {
+      if (currentFrames.length === 0) {
+        showNotification('Recording must have at least one frame', false);
+        return;
+      }
+
+      try {
+        const encodedRecording = generateRecording(currentFrames);
+        let storageValue = encodedRecording;
+        
+        // Check if original was JSON and preserve time field
+        let originalValue = localStorage.getItem(currentRecordingKey);
+        try {
+          const parsed = JSON.parse(originalValue);
+          if (parsed.time) {
+            storageValue = JSON.stringify({
+              time: parsed.time,
+              recording: encodedRecording
+            });
+          }
+        } catch (e) {
+          // Not JSON, just save the base64
+        }
+        
+        localStorage.setItem(currentRecordingKey, storageValue);
+        showNotification(`Recording "${currentRecordingKey}" saved`);
+        closeRecordingModal();
+        refreshList();
+      } catch (e) {
+        showNotification(`Error saving recording: ${e.message}`, false);
+      }
+    }
     
     function refreshList() {
       const container = document.getElementById('tableContainer');
@@ -341,13 +963,23 @@
       
       items.forEach(key => {
         const value = localStorage.getItem(key);
+        const isRecording = key.includes('v1_record');
+        
+        let actions = `
+          <button onclick="editItem('${escapeAttr(key)}')">Edit</button>
+          <button onclick="copyToClipboard('${escapeAttr(value)}')">Copy</button>`;
+        
+        if (isRecording) {
+          actions += `<button onclick="openRecordingEditor('${escapeAttr(key)}')">Recording</button>`;
+        }
+        
+        actions += `<button class="btn-danger" onclick="deleteItem('${escapeAttr(key)}')">Delete</button>`;
+        
         html += `<tr>
           <td class="key-cell">${escapeHtml(key)}</td>
-          <td class="value-cell">${escapeHtml(value)}</td>
+          <td class="value-cell">${escapeHtml(value.substring(0, 100))}${value.length > 100 ? '...' : ''}</td>
           <td class="action-cell">
-            <button onclick="editItem('${escapeAttr(key)}')">Edit</button>
-            <button onclick="copyToClipboard('${escapeAttr(value)}')">Copy</button>
-            <button class="btn-danger" onclick="deleteItem('${escapeAttr(key)}')">Delete</button>
+            ${actions}
           </td>
         </tr>`;
       });
@@ -378,6 +1010,14 @@
     
     function escapeAttr(text) {
       return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('recordingModal');
+      if (event.target === modal) {
+        closeRecordingModal();
+      }
     }
     
     refreshList();
